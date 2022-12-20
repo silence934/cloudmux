@@ -61,6 +61,35 @@ type SKafka struct {
 	SecurityGroup string `json:"SecurityGroup"`
 }
 
+//func (self *SKafka) GetTags() (map[string]string, error) {
+//	ret := map[string]string{}
+//	for _, tag := range self.Tags {
+//		if strings.HasPrefix(tag.TagKey, "aliyun") || strings.HasPrefix(tag.TagKey, "acs:") {
+//			continue
+//		}
+//		if len(tag.TagKey) > 0 {
+//			ret[tag.TagKey] = tag.TagValue
+//		}
+//	}
+//	return ret, nil
+//}
+//
+//func (self *SKafka) GetSysTags() map[string]string {
+//	ret := map[string]string{}
+//	for _, tag := range self.Tags {
+//		if strings.HasPrefix(tag.TagKey, "aliyun") || strings.HasPrefix(tag.TagKey, "acs:") {
+//			if len(tag.TagKey) > 0 {
+//				ret[tag.TagKey] = tag.TagValue
+//			}
+//		}
+//	}
+//	return ret
+//}
+
+func (self *SKafka) SetTags(tags map[string]string, replace bool) error {
+	return self.region.SetResourceTags(ALIYUN_SERVICE_ES, "INSTANCE", self.InstanceId, tags, replace)
+}
+
 func (self *SKafka) GetName() string {
 	return self.Name
 }

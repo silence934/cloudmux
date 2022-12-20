@@ -16,6 +16,7 @@ package shell
 
 import (
 	"time"
+	"yunion.io/x/log"
 
 	"yunion.io/x/pkg/errors"
 
@@ -43,6 +44,13 @@ func init() {
 	}
 
 	shellutils.R(&MongoDBIdOptions{}, "mongodb-show", "Show mongodb", func(cli *aliyun.SRegion, args *MongoDBIdOptions) error {
+		d, err := cli.GetICloudMongoDBs()
+		if err != nil {
+			return errors.Wrapf(err, "GetICloudMongoDBs")
+		}
+
+		log.Infof("data:%+v", d[0])
+
 		db, err := cli.GetMongoDB(args.ID)
 		if err != nil {
 			return errors.Wrapf(err, "GetMongoDB(%s)", args.ID)

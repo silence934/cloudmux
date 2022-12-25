@@ -34,6 +34,8 @@ func (self *SRegion) tagRequest(serviceType, action string, params map[string]st
 		return self.rdsRequest(action, params)
 	case ALIYUN_SERVICE_ES:
 		return self.esRequest(action, params, body)
+	case ALIYUN_SERVICE_KAFKA:
+		return self.kafkaRequest(action, params)
 	case ALIYUN_SERVICE_SLB:
 		return self.lbRequest(action, params)
 	case ALIYUN_SERVICE_KVS:

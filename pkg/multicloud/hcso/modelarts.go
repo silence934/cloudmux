@@ -20,12 +20,12 @@ import (
 
 	"yunion.io/x/jsonutils"
 	"yunion.io/x/pkg/errors"
+	"yunion.io/x/pkg/util/billing"
 
 	billing_api "yunion.io/x/cloudmux/pkg/apis/billing"
 	"yunion.io/x/cloudmux/pkg/apis/compute"
 	"yunion.io/x/cloudmux/pkg/cloudprovider"
 	"yunion.io/x/cloudmux/pkg/multicloud"
-	"yunion.io/x/onecloud/pkg/util/billing"
 )
 
 type SModelartsPool struct {
@@ -131,6 +131,9 @@ func (self *SRegion) GetIModelartsPools() ([]cloudprovider.ICloudModelartsPool, 
 }
 
 func (self *SRegion) CreateIModelartsPool(args *cloudprovider.ModelartsPoolCreateOption) (cloudprovider.ICloudModelartsPool, error) {
+	if len(args.Cidr) == 0 {
+		args.Cidr = "192.168.128.0/17"
+	}
 	netObj, err := self.client.modelartsPoolNetworkList(nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "SHuaweiClient.GetPools")
